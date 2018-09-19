@@ -1,17 +1,13 @@
-# Luke's build of st - the simple (suckless) terminal
+# Accacio's version of Luke's build of st - the simple (suckless) terminal
 
 The [suckless terminal (st)](https://st.suckless.org/) with some additional features:
 
 + Adjustable transparency/alpha
 + Compatibility with `Xresources` and `pywal` for dynamic colors
-+ Copy to clipboard (alt-shift-c)
-+ Default font is system "mono" at 14pt, meaning the font will match your system font.
-+ Hold alt and press either ↑/↓ or the vim keys k/j to move up/down in the terminal.
++ Copy to clipboard (Control-shift-c)
++ Default font is system "mono" at 15pt
++ Hold alt and press either ↑/↓ p/n
 + Shift+Mouse wheel will as well.
-+ Alt-u and Alt-d scroll back/forward in history a page at a time.
-+ Alt-PageUp and Alt-PageDown will do the same.
-+ Zoom in/out with Alt+Shift+k/j or u/d for larger intervals.
-+ Vertcenter
 + Default solarized colors without `pywal`
 + updated to latest version 0.8.1
 
