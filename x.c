@@ -2018,7 +2018,6 @@ main(int argc, char *argv[])
 {
 	xw.l = xw.t = 0;
 	xw.isfixed = False;
-	win.cursor = cursorshape;
 
 	ARGBEGIN {
 	case 'a':
@@ -2078,6 +2077,8 @@ run:
 		die("Can't open display\n");
 
 	config_init();
+
+        win.cursor = cursorshape;
 	cols = MAX(cols, 1);
 	rows = MAX(rows, 1);
 	tnew(cols, rows);
