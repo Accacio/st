@@ -32,7 +32,7 @@ static float chscale = 1.0;
  *
  * More advanced example: " `'\"()[]{}"
  */
-char *worddelimiters = " ";
+char *worddelimiters = " `'\"()[]{}-";
 
 /* selection timeouts (in milliseconds) */
 static unsigned int doubleclicktimeout = 300;
@@ -60,7 +60,7 @@ static unsigned int cursorthickness = 2;
  * bell volume. It must be a value between -100 and 100. Use 0 for disabling
  * it
  */
-static int bellvolume = 0;
+static int bellvolume = 50;
 
 /* default TERM value */
 char *termname = "st-256color";
@@ -80,7 +80,7 @@ char *termname = "st-256color";
  *
  *	stty tabs
  */
-unsigned int tabspaces = 8;
+unsigned int tabspaces = 2;
 
 /* bg opacity */
 // unsigned int alpha = 0xe8;
@@ -110,6 +110,7 @@ unsigned int alpha = 0xed;
 // };
 
 static const char *colorname[] = {
+<<<<<<< HEAD
   "#282828", 
   "#cc241d",
   "#98971a",
@@ -129,12 +130,35 @@ static const char *colorname[] = {
   // [255] = 0,
   "black",   
   "white"   
+=======
+	"#073642",  /*  0: black    */
+	"#dc322f",  /*  1: red      */
+	"#009900",  /*  2: green    */
+	"#b58900",  /*  3: yellow   */
+	"#268bd2",  /*  4: blue     */
+	"#d33682",  /*  5: magenta  */
+	"#2aa198",  /*  6: cyan     */
+	"#eee8d5",  /*  7: white    */
+	"#002b36",  /*  8: brblack  */
+	"#cb4b16",  /*  9: brred    */
+	"#586e75",  /* 10: brgreen  */
+	"#657b83",  /* 11: bryellow */
+	"#002b36",  /* 12: brblue   */
+	"#fff",  /* 13: brmagenta*/
+	"#099000",  /* 14: brcyan   */
+	"#fdf6e3",  /* 15: brwhite  */
+	/* more colors can be added after 255 to use with DefaultXX */
+	"#00cc00",   /* 256 -> bg */
+	"#00cc00", /* 257 -> fg */
+        "#fdf6e3"  /* 258 -> cursor */
+>>>>>>> f5818dc206e2818501402a8dd1a73d27d21bb6ba
 };
 
 /*
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
+<<<<<<< HEAD
 // unsigned int defaultfg = 12;
 // unsigned int defaultbg = 8;
 // static unsigned int defaultcs = 14;
@@ -144,6 +168,12 @@ unsigned int defaultfg = 15;
 unsigned int defaultbg = 0;
 static unsigned int defaultcs = 15;
 static unsigned int defaultrcs = 0;
+=======
+unsigned int defaultbg = 12;
+unsigned int defaultfg = 13;
+static unsigned int defaultcs = 14;
+static unsigned int defaultrcs = 15;
+>>>>>>> f5818dc206e2818501402a8dd1a73d27d21bb6ba
 
 /*
  * Default shape of cursor
@@ -178,6 +208,7 @@ static unsigned int defaultattr = 11;
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
+		{ "alpha",      INTEGER,   &alpha },
 		{ "font",         STRING,  &font },
 		{ "color0",       STRING,  &colorname[0] },
 		{ "color1",       STRING,  &colorname[1] },
@@ -191,13 +222,13 @@ ResourcePref resources[] = {
 		{ "color9",       STRING,  &colorname[9] },
 		{ "color10",      STRING,  &colorname[10] },
 		{ "color11",      STRING,  &colorname[11] },
-		{ "color12",      STRING,  &colorname[12] },
-		{ "color13",      STRING,  &colorname[13] },
-		{ "color14",      STRING,  &colorname[14] },
-		{ "color15",      STRING,  &colorname[15] },
-		{ "background",   STRING,  &colorname[256] },
-		{ "foreground",   STRING,  &colorname[257] },
-		{ "cursorColor",  STRING,  &colorname[258] },
+		{ "background",      STRING,  &colorname[12] },
+		{ "foreground",      STRING,  &colorname[13] },
+		{ "cursorColor",      STRING,  &colorname[14] },
+		{ "revCursorColor",      STRING,  &colorname[15] },
+		/* { "background",   STRING,  &colorname[256] }, */
+		/* { "foreground",   STRING,  &colorname[257] }, */
+		/* { "cursorColor",  STRING,  &colorname[258] }, */
 		{ "termname",     STRING,  &termname },
 		{ "shell",        STRING,  &shell },
 		{ "xfps",         INTEGER, &xfps },
@@ -207,6 +238,7 @@ ResourcePref resources[] = {
 		{ "tabspaces",    INTEGER, &tabspaces },
 		{ "cwscale",      FLOAT,   &cwscale },
 		{ "chscale",      FLOAT,   &chscale },
+                { "cursorshape", INTEGER, &cursorshape},
 };
 
 /*
@@ -230,36 +262,36 @@ MouseKey mkeys[] = {
 #define TERMMOD (ControlMask|ShiftMask)
 
 static Shortcut shortcuts[] = {
-	/* mask                 keysym          function        argument */
-	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
-	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
-	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
-	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
-	{ MODKEY|ShiftMask,     XK_Prior,       zoom,           {.f = +1} },
-	{ MODKEY|ShiftMask,     XK_Next,        zoom,           {.f = -1} },
-	{ MODKEY|ShiftMask,     XK_Home,        zoomreset,      {.f =  0} },
-	{ ShiftMask,            XK_Insert,      clippaste,      {.i =  0} },
-	{ MODKEY|ShiftMask,     XK_Insert,      clippaste,      {.i =  0} },
-	{ ControlMask|ShiftMask,     XK_C,           clipcopy,       {.i =  0} },
-	{ ControlMask|ShiftMask,     XK_V,           clippaste,      {.i =  0} },
-	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
-	{ MODKEY,               XK_Control_L,   iso14755,       {.i =  0} },
-	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
-	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
-	{ MODKEY,               XK_Page_Up,     kscrollup,      {.i = -1} },
-	{ MODKEY,               XK_Page_Down,   kscrolldown,    {.i = -1} },
-	{ MODKEY,            	XK_p,  		kscrollup,      {.i =  1} },
-	{ MODKEY,            	XK_n,   	kscrolldown,    {.i =  1} },
-	{ MODKEY,            	XK_Up,  	kscrollup,      {.i =  1} },
-	{ MODKEY,            	XK_Down,   	kscrolldown,    {.i =  1} },
-	{ MODKEY,	        XK_p,		kscrollup,      {.i = -1} },
-	{ MODKEY,  		XK_n,		kscrolldown,   	{.i = -1} },
-	{ MODKEY|ShiftMask,     XK_Up,          zoom,           {.f = +1} },
-	{ MODKEY|ShiftMask,     XK_Down,        zoom,           {.f = -1} },
-	{ MODKEY|ShiftMask,     XK_K,           zoom,           {.f = +1} },
-	{ MODKEY|ShiftMask,     XK_J,           zoom,           {.f = -1} },
-	{ MODKEY|ShiftMask,     XK_U,           zoom,           {.f = +2} },
-	{ MODKEY|ShiftMask,     XK_D,           zoom,           {.f = -2} },
+  /* mask                 keysym          function        argument */
+  { XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
+  { ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
+  { ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
+  { XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
+  { MODKEY|ShiftMask,     XK_Prior,       zoom,           {.f = +1} },
+  { MODKEY|ShiftMask,     XK_Next,        zoom,           {.f = -1} },
+  { MODKEY|ShiftMask,     XK_Home,        zoomreset,      {.f =  0} },
+  { ShiftMask,            XK_Insert,      clippaste,      {.i =  0} },
+  { MODKEY|ShiftMask,     XK_Insert,      clippaste,      {.i =  0} },
+  { ControlMask|ShiftMask,XK_C,           clipcopy,       {.i =  0} },
+  { ControlMask|ShiftMask,XK_V,           clippaste,      {.i =  0} },
+  { TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
+  { MODKEY,               XK_Control_L,   iso14755,       {.i =  0} },
+  { ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
+  { ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
+  { MODKEY,               XK_Page_Up,     kscrollup,      {.i = -1} },
+  { MODKEY,               XK_Page_Down,   kscrolldown,    {.i = -1} },
+  { MODKEY|ShiftMask,	  XK_P,  	  kscrollup,      {.i =  -1} },
+  { MODKEY|ShiftMask,     XK_N,   	  kscrolldown,    {.i =  -1} },
+  { MODKEY,            	  XK_Up,  	  kscrollup,      {.i =  1} },
+  { MODKEY,            	  XK_Down,   	  kscrolldown,    {.i =  1} },
+  { MODKEY,	          XK_p,		  kscrollup,      {.i = 1} },
+  { MODKEY,  		  XK_n,		  kscrolldown,    {.i = 1} },
+  { MODKEY|ShiftMask,     XK_Up,          zoom,           {.f = +1} },
+  { MODKEY|ShiftMask,     XK_Down,        zoom,           {.f = -1} },
+  { MODKEY|ShiftMask,     XK_K,           zoom,           {.f = +1} },
+  { MODKEY|ShiftMask,     XK_J,           zoom,           {.f = -1} },
+  { MODKEY|ShiftMask,     XK_U,           zoom,           {.f = +2} },
+  { MODKEY|ShiftMask,     XK_D,           zoom,           {.f = -2} },
 };
 
 /*
