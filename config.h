@@ -110,7 +110,6 @@ unsigned int alpha = 0xed;
 // };
 
 static const char *colorname[] = {
-<<<<<<< HEAD
   "#282828", 
   "#cc241d",
   "#98971a",
@@ -130,35 +129,12 @@ static const char *colorname[] = {
   // [255] = 0,
   "black",   
   "white"   
-=======
-	"#073642",  /*  0: black    */
-	"#dc322f",  /*  1: red      */
-	"#009900",  /*  2: green    */
-	"#b58900",  /*  3: yellow   */
-	"#268bd2",  /*  4: blue     */
-	"#d33682",  /*  5: magenta  */
-	"#2aa198",  /*  6: cyan     */
-	"#eee8d5",  /*  7: white    */
-	"#002b36",  /*  8: brblack  */
-	"#cb4b16",  /*  9: brred    */
-	"#586e75",  /* 10: brgreen  */
-	"#657b83",  /* 11: bryellow */
-	"#002b36",  /* 12: brblue   */
-	"#fff",  /* 13: brmagenta*/
-	"#099000",  /* 14: brcyan   */
-	"#fdf6e3",  /* 15: brwhite  */
-	/* more colors can be added after 255 to use with DefaultXX */
-	"#00cc00",   /* 256 -> bg */
-	"#00cc00", /* 257 -> fg */
-        "#fdf6e3"  /* 258 -> cursor */
->>>>>>> f5818dc206e2818501402a8dd1a73d27d21bb6ba
 };
 
 /*
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
-<<<<<<< HEAD
 // unsigned int defaultfg = 12;
 // unsigned int defaultbg = 8;
 // static unsigned int defaultcs = 14;
@@ -168,12 +144,6 @@ unsigned int defaultfg = 15;
 unsigned int defaultbg = 0;
 static unsigned int defaultcs = 15;
 static unsigned int defaultrcs = 0;
-=======
-unsigned int defaultbg = 12;
-unsigned int defaultfg = 13;
-static unsigned int defaultcs = 14;
-static unsigned int defaultrcs = 15;
->>>>>>> f5818dc206e2818501402a8dd1a73d27d21bb6ba
 
 /*
  * Default shape of cursor
